@@ -3,11 +3,16 @@ from flask import render_template, send_from_directory, request
 from app import app
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
 def index():
+    return render_template("index.html")
+
+
+@app.route("/api/", methods=["POST"])
+def api():
     data = request.json
     print(data)
-    return render_template("index.html")
+    return 'OK', 200
 
 
 @app.route('/api/<int:status_id>/', methods=["GET"])
