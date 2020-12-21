@@ -19,9 +19,11 @@ def api():
     binary_image = base64.b64decode(base64_image)
     pil_image = Image.open(BytesIO(binary_image))
     resized_image = pil_image.resize((300, 300))
+    resized_image.show()
     byte_stream = BytesIO()
     resized_image.save(byte_stream, format='PNG')
     img_str = base64.b64encode(byte_stream.getvalue())
+    print(img_str)
     return jsonify(), 201
 
 
