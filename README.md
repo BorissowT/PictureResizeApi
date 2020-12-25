@@ -7,6 +7,6 @@ The API (address/api) requires an post request with text json in body as follow 
 Technologies:\
 ajax for encoding picture.\
 flask for handling requests.\
-kafka for saving requests.\
+kafka confluence docker container for saving requests.\
 mysql for saving results.\
-docker container for virtualization.
+docker container for service.

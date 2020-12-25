@@ -1,9 +1,8 @@
 from flask import render_template, send_from_directory, request, jsonify
 
-import base64
-from PIL import Image
-from io import BytesIO
 
+from kafka_client.kafka_producer import producer
+from json import dumps
 from app import app
 
 
@@ -15,15 +14,8 @@ def index():
 @app.route("/api/", methods=["POST"])
 def api():
     data_json = request.json
-    base64_image = data_json["image"]
-    binary_image = base64.b64decode(base64_image)
-    pil_image = Image.open(BytesIO(binary_image))
-    resized_image = pil_image.resize((300, 300))
-    resized_image.show()
-    byte_stream = BytesIO()
-    resized_image.save(byte_stream, format='PNG')
-    img_str = base64.b64encode(byte_stream.getvalue())
-    print(img_str)
+    producer.send('topic_test', value=data_json)
+    # TODO: return identifier
     return jsonify(), 201
 
 

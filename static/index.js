@@ -6,12 +6,14 @@ $("#submit").on("click",()=>{
   //file's loaded
   reader.addEventListener("load", function () {
     var result = reader.result.split(",");
-    send_ajax_with_image(result[1]);
+    var width = $('#width').val()
+    var height = $("#height").val()
+    send_ajax_with_image(result[1], width, height);
   }, false);
 
-  function send_ajax_with_image(image){
+  function send_ajax_with_image(image, width, height){
     
-    var json = `{"image":"${image}"}`;
+    var json = `{"image":"${image}", "width":"${width}", "height":"${height}"}`;
     $.ajax({
       type:'POST',
       url: '/api/',
