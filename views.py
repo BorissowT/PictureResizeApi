@@ -1,7 +1,7 @@
 from flask import render_template, send_from_directory, request, jsonify
 
 
-#from kafka_client.kafka_producer import producer
+from kafka_client.kafka_producer import producer
 
 from app import app
 
@@ -18,7 +18,7 @@ def api():
     data_json = request.json
     hashed_id = hash_id(request.remote_addr)
     data_json["hashed_id"] = hashed_id
-    #producer.send('topic_test', value=data_json)
+    producer.send('topic_test', value=data_json)
     return jsonify(), 201, {"Location": "/api/", "id": hashed_id}
 
 
