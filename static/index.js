@@ -21,8 +21,8 @@ $("#submit").on("click",()=>{
                     "Content-Type": "application/json"
                 },
       data: json
-    }).done(function() {
-      console.log("done")
+    }).done(function(data, textStatus, request) {
+      console.log(request.getResponseHeader('id'))
     }).fail(function(e) {
       console.log(e);
     });
