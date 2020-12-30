@@ -31,7 +31,8 @@ $("#submit").on("click",()=>{
                 },
       data: json
     }).done(function(data, textStatus, request) {
-      console.log("Operation's id is:", request.getResponseHeader('id'))
+      console.log("Operation's id is:", request.getResponseHeader('id'));
+      alert(`Operation's id is: ${request.getResponseHeader('id')}`);
     }).fail(function(e) {
       console.log(e);
     });
