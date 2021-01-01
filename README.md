@@ -10,3 +10,10 @@ flask for handling requests.\
 kafka confluence docker container for saving requests.\
 mysql for saving results.\
 docker container for service.
+
+to start the app you should:
+1) install docker engine:
+2) from workdir execute command: docker docker-compose up or docker-compose up -d 
+3) sometimes broker starts too slow or doesn't start because of slow zookeeper. thence try to start broker container and then pictureapi_web_1 again
+4) proceed to localhost:5000
+
