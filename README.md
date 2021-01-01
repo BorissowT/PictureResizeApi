@@ -18,4 +18,4 @@ to start the app you should:
 4) proceed to localhost:5000
 
 to start a consumer:\
-1)execute two commands in \kafka_client/consumer_container directory in kafka_client_commands.txt
+1)execute two commands in kafka_client/consumer_container directory in kafka_client_commands.txt
