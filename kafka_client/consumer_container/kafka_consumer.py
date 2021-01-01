@@ -6,11 +6,11 @@ from json import loads
 from PIL import Image
 from kafka import KafkaConsumer
 
-kafka_brocker_port = os.environ.get("KAFKA_BROKER_PORT")
+kafka_broker = os.environ.get("KAFKA_BROKER")
 
 consumer = KafkaConsumer(
     'topic_test',
-    bootstrap_servers=['localhost:{}'.format(kafka_brocker_port)],
+    bootstrap_servers=[kafka_broker],
     auto_offset_reset='earliest',
     enable_auto_commit=True,
     group_id='my-group-id',
@@ -23,8 +23,14 @@ for event in consumer:
     height = data_json["height"]
     binary_image = base64.b64decode(base64_image)
     pil_image = Image.open(BytesIO(binary_image))
-    resized_image = pil_image.resize((width, height))
-    byte_stream = BytesIO()
-    resized_image.save(byte_stream, format='PNG')
-    img_str = base64.b64encode(byte_stream.getvalue())
+    try:
+        resized_image = pil_image.resize((int(width), int(height)))
+    except Exception as error:
+        print(error)
+    else:
+        byte_stream = BytesIO()
+        resized_image.save(byte_stream, format='PNG')
+        img_str = base64.b64encode(byte_stream.getvalue())
+        print(img_str)
+
     #TODO: push data to database

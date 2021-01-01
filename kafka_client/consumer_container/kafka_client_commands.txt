@@ -1,0 +1,2 @@
+docker build --tag pictureapi_kafka_consumer_1 .
+docker run --network=pictureapi_default --name pictureapi_kafka_consumer_1 pictureapi_kafka_consumer_1
