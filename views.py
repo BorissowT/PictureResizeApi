@@ -5,7 +5,8 @@ from kafka_client.kafka_producer import producer
 
 from app import app
 
-from service_functions import hash_id
+from service_functions import hash_id, topic_name
+
 
 
 @app.route("/", methods=["GET"])
@@ -18,7 +19,8 @@ def api():
     data_json = request.json
     hashed_id = hash_id(request.remote_addr)
     data_json["hashed_id"] = hashed_id
-    producer.send('topic_test', value=data_json)
+    print("sending meassage to {}".format(topic_name))
+    producer.send(topic_name, value=data_json)
     return jsonify(), 201, {"Location": "/api/", "id": hashed_id}
 
 

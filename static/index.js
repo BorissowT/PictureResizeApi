@@ -13,6 +13,7 @@ $("#submit").on("click",()=>{
     var height = $("#height").val();
     if (Number.isInteger(parseInt(width)) && Number.isInteger(parseInt(height)) && width > 0 && height > 0) {
       send_ajax_with_image(result[1], width, height);
+      console.log(result[1])
     }
     else{
       alert("width and height has to be postitive numbers");

@@ -1,12 +1,16 @@
+import sys
+
 from flask import Flask
+
+from service_functions import set_app_params
+
 app = Flask(__name__)
 
-from views import *
 
 if __name__ == '__main__':
-    import os
-    kafka_brocker = os.environ.get("KAFKA_BROKER")
-    print(kafka_brocker)
-    app.run(host='0.0.0.0')
-# host='0.0.0.0'
-# debug=True
+
+    app_args = set_app_params(sys.argv)
+    debug = app_args["debug"]
+    host = app_args["host"]
+    from views import *
+    app.run(debug=debug, host=host)

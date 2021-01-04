@@ -6,10 +6,15 @@ from json import loads
 from PIL import Image
 from kafka import KafkaConsumer
 
+
 kafka_broker = os.environ.get("KAFKA_BROKER")
 
+topic_name = 'topic_test'
+
+print("consumer is listening to {} topic".format(topic_name))
+
 consumer = KafkaConsumer(
-    'topic_test',
+    topic_name,
     bootstrap_servers=[kafka_broker],
     auto_offset_reset='earliest',
     enable_auto_commit=True,
@@ -34,3 +39,5 @@ for event in consumer:
         print(img_str)
 
     #TODO: push data to database
+
+
