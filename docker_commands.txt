@@ -8,3 +8,5 @@ docker logs pictureapi (to see terminal in container)
 docker stop pictureapi (to stop running container)
 docker container rm pictureapi (to delete container)
 docker image rm pictureapi (to delete image)
+
+use docker docker-compose up to start a container with producer

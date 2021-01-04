@@ -1,5 +1,6 @@
 import hashlib
 import time
+import os
 
 topic_name = "topic_test"
 
@@ -18,7 +19,8 @@ def set_app_params(argv):
         if arg == "-container":
             host = "0.0.0.0"
             debug = False
-        if "-topic_name=" in arg:
             global topic_name
+            topic_name = os.environ.get("KAFKA_TOPIC_NAME")
+        if "-topic_name=" in arg:
             topic_name = arg.split("-topic_name=")[1]
     return {"debug": debug, "host": host}

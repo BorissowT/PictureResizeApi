@@ -1,3 +1,4 @@
+import os
 import sys
 
 from flask import Flask
@@ -8,7 +9,6 @@ app = Flask(__name__)
 
 
 if __name__ == '__main__':
-
     app_args = set_app_params(sys.argv)
     debug = app_args["debug"]
     host = app_args["host"]
