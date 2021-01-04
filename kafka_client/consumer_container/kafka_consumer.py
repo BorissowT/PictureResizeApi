@@ -9,11 +9,12 @@ import sys
 
 kafka_broker = os.environ.get("KAFKA_BROKER")
 topic_name = 'topic_test'
-try:
-    if "-topic_name=" in sys.argv[1]:
-        topic_name = sys.argv[1].split("-topic_name=")[1]
-except IndexError:
-    topic_name = 'topic_test'
+
+for arg in sys.argv:
+    if arg == "-container":
+        topic_name = os.environ.get("KAFKA_TOPIC_NAME")
+    if "-topic_name=" in arg:
+        topic_name = arg.split("-topic_name=")[1]
 
 print("consumer is listening to the '{}' topic".format(topic_name))
 
