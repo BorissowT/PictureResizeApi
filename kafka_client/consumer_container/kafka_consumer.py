@@ -5,13 +5,17 @@ from json import loads
 
 from PIL import Image
 from kafka import KafkaConsumer
-
+import sys
 
 kafka_broker = os.environ.get("KAFKA_BROKER")
-
 topic_name = 'topic_test'
+try:
+    if "-topic_name=" in sys.argv[1]:
+        topic_name = sys.argv[1].split("-topic_name=")[1]
+except IndexError:
+    topic_name = 'topic_test'
 
-print("consumer is listening to {} topic".format(topic_name))
+print("consumer is listening to the '{}' topic".format(topic_name))
 
 consumer = KafkaConsumer(
     topic_name,
