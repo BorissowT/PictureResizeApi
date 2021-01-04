@@ -14,15 +14,10 @@ web server - werkzeug
 
 to start the app you should:
 1) install docker engine:
-2) from workdir execute command: docker docker-compose up or docker-compose up -d 
+2) from workdir execute command: docker-compose up or docker-compose up -d (p.s. you can specify kafka topic for the producer on this step by modifying variable in .env file)
 3) sometimes broker starts too slow or doesn't start because of slow zookeeper. thence try to start broker container and then pictureapi_web_1 again
-4) proceed to localhost:5000
+4) proceed to localhost:5000 or execute "docker logs pictureapi_web_1" (you'll see: Running on http://0.0.0.0:5000/)
 
 to start a consumer:\
-1)execute two commands in kafka_client/consumer_container directory in kafka_client_commands.txt
-
-
-Note!:
-to set
-to start a consumer:\
-1)execute two commands in kafka_client/consumer_container directory in kafka_client_commands.txt
+1)execute first command from kafka_client_commands in consumer's directory
+2)execute second command. Note, that you can to specify topic's name for consumer on this step. By default it set to "topic_test"
