@@ -9,7 +9,8 @@ ajax for encoding picture.\
 flask for handling requests.\
 kafka confluence docker container for saving requests.\
 mysql for saving results.\
-docker container for service.
+docker container for service.\
+web server - werkzeug
 
 to start the app you should:
 1) install docker engine:
@@ -17,5 +18,11 @@ to start the app you should:
 3) sometimes broker starts too slow or doesn't start because of slow zookeeper. thence try to start broker container and then pictureapi_web_1 again
 4) proceed to localhost:5000
 
+to start a consumer:\
+1)execute two commands in kafka_client/consumer_container directory in kafka_client_commands.txt
+
+
+Note!:
+to set
 to start a consumer:\
 1)execute two commands in kafka_client/consumer_container directory in kafka_client_commands.txt
