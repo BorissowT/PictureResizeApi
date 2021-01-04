@@ -19,5 +19,5 @@ to start the app you should:
 4) proceed to localhost:5000 or execute "docker logs pictureapi_web_1" (you'll see: Running on http://0.0.0.0:5000/)
 
 to start a consumer:\
-1)execute first command from kafka_client_commands in consumer's directory
+1)execute first command from kafka_client_commands in consumer's directory\
 2)execute second command. Note, that you can to specify topic's name for consumer on this step. By default it set to "topic_test"
