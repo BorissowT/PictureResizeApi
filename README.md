@@ -20,4 +20,4 @@ to start the app you should:
 
 to start a consumer:\
 1)execute first command from kafka_client_commands in consumer's directory
-2)execute second command. Note, that you can to specify topic's name for consumer on this step. By default it set to "topic_test"
+2)execute second command. Note, that you can to specify topic's name and group's name for the consumer on this step, by setting environment variables. By default it set to "topic_test" and "my-group-id", respectively.
