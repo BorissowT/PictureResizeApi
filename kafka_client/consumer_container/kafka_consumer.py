@@ -7,7 +7,8 @@ from json import loads
 from PIL import Image
 from kafka import KafkaConsumer
 
-from db_consumer.database import Response, session
+from db_consumer.database import session
+from serialization_consumer.schema import response_schema, ResponseSchema
 
 kafka_broker = os.environ.get("KAFKA_BROKER")
 topic_name = 'topic_test'
@@ -34,26 +35,19 @@ consumer = KafkaConsumer(
 )
 for event in consumer:
     data_json = event.value
-    base64_image = data_json["image"]
-    width = data_json["width"]
-    height = data_json["height"]
     try:
-        binary_image = base64.b64decode(base64_image)
+        binary_image = base64.b64decode(data_json["image"])
         pil_image = Image.open(BytesIO(binary_image))
-        resized_image = pil_image.resize((int(width), int(height)))
+        resized_image = pil_image.resize((int(data_json["width"]), int(data_json["height"])))
+        byte_stream = BytesIO()
+        resized_image.save(byte_stream, format='PNG')
     except Exception as error:
         print(error)
     else:
-        byte_stream = BytesIO()
-        resized_image.save(byte_stream, format='PNG')
         resized_img_str = base64.b64encode(byte_stream.getvalue())
-        new_request = Response(
-            Identifier=data_json["identifier"],
-            BaseCode=resized_img_str,
-            Width=data_json["width"],
-            Height=data_json["height"]
-        )
-        session.add(new_request)
+        data_json["image"] = resized_img_str
+        result = response_schema.load(data_json, session=session)
+        session.add(result)
         session.commit()
         print("successfully created")
 

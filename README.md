@@ -1,8 +1,8 @@
 # PictureResizeApi
 
-create an API for picture resizing. The service has to be an asynchronous.
-That's mean all of requests has its own id number. User can get status of the operation by sending request to the address/api/{id}.
-The API (address/api) requires an post request with text json in body as follow {"image":{base64 encoded picture},"width":{w}, "height":{h}}.
+create an API for the picture resizing. The service has to be an asynchronous.
+That's mean all the requests has its own id number. User can get status of the operation by sending request to the address/api/{id}.
+The API (address/api) requires a post request with text json in body as follows {"image":{base64 encoded picture},"width":{w}, "height":{h}}.
 
 Technologies:\
 ajax for encoding picture.\
@@ -10,6 +10,7 @@ flask for handling requests.\
 kafka confluence docker container for saving requests.\
 mysql for saving results.\
 docker container for service.\
+marshmallow - to serialize data (is for hiding real db-column's names from clients)\
 web server - werkzeug
 
 to start the app you should:
@@ -20,4 +21,4 @@ to start the app you should:
 
 to start a consumer:\
 1)execute first command from kafka_client_commands in consumer's directory
-2)execute second command. Note, that you can to specify topic's name and group's name for the consumer on this step, by setting environment variables. By default it set to "topic_test" and "my-group-id", respectively.
+2)execute second command. Note, that you can to specify the topic's name and group's name for the consumer on this step, by setting environment variables. By default, it set to "topic_test" and "my-group-id", respectively.
