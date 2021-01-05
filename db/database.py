@@ -22,5 +22,5 @@ db = SQLAlchemy(app)
 Base = automap_base()
 Base.prepare(db.engine, reflect=True)
 
-Request = Base.classes.request
+Response = Base.classes.response
 session = Session(db.engine)

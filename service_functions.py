@@ -24,3 +24,5 @@ def set_app_params(argv):
         if "-topic_name=" in arg:
             topic_name = arg.split("-topic_name=")[1]
     return {"debug": debug, "host": host}
+
+
