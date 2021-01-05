@@ -1,4 +1,4 @@
-from flask import render_template, send_from_directory, request, jsonify
+from flask import render_template, request, jsonify
 
 
 from kafka_client.kafka_producer import producer
@@ -6,7 +6,6 @@ from kafka_client.kafka_producer import producer
 from app import app
 
 from service_functions import hash_id, topic_name
-
 
 
 @app.route("/", methods=["GET"])

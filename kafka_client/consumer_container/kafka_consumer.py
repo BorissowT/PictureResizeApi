@@ -5,6 +5,7 @@ from json import loads
 
 from PIL import Image
 from kafka import KafkaConsumer
+from db.database import Request, session
 import sys
 
 kafka_broker = os.environ.get("KAFKA_BROKER")
@@ -40,9 +41,15 @@ for event in consumer:
     else:
         byte_stream = BytesIO()
         resized_image.save(byte_stream, format='PNG')
-        img_str = base64.b64encode(byte_stream.getvalue())
-        print(img_str)
+        resized_img_str = base64.b64encode(byte_stream.getvalue())
+        new_request = Request(
+            Identifier=data_json["hashed_id"],
+            BaseCode=resized_img_str,
+            Width=data_json["width"],
+            Height=data_json["height"]
+        )
+        session.add(new_request)
+        session.commit()
 
-    #TODO: push data to database
 
 

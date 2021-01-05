@@ -1,8 +1,10 @@
+import os
+
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.automap import automap_base
+from sqlalchemy.orm import Session
+
 from app import app
-import pymysql
-import os
 
 db_user = os.environ.get("DB_MYSQL_USER")
 db_pass = os.environ.get("DB_MYSQL_PASS")
@@ -21,3 +23,4 @@ Base = automap_base()
 Base.prepare(db.engine, reflect=True)
 
 Request = Base.classes.request
+session = Session(db.engine)
