@@ -6,6 +6,8 @@ from kafka_client.kafka_producer import producer
 from app import app
 
 from service_functions import hash_id, topic_name
+from db.database import Request, session
+from serialization.Schema import request_schema
 
 
 @app.route("/", methods=["GET"])
@@ -17,15 +19,17 @@ def index():
 def api():
     data_json = request.json
     hashed_id = hash_id(request.remote_addr)
-    data_json["hashed_id"] = hashed_id
+    data_json["identifier"] = hashed_id
     print("sending meassage to {}".format(topic_name))
     producer.send(topic_name, value=data_json)
     return jsonify(), 201, {"Location": "/api/", "id": hashed_id}
 
 
-@app.route('/api/<int:status_id>/', methods=["GET"])
+@app.route('/api/<status_id>/', methods=["GET"])
 def get_status(status_id):
-    return "{}".format(status_id)
+    req = session.query(Request).filter(Request.Identifier == status_id).first()
+    serialized_data = request_schema.dump(req)
+    return jsonify(serialized_data), 200, {"Location": "/api/{}".format(status_id)}
 
 
 @app.errorhandler(500)

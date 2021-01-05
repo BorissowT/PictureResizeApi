@@ -1,12 +1,13 @@
 import base64
 import os
+import sys
 from io import BytesIO
 from json import loads
 
 from PIL import Image
 from kafka import KafkaConsumer
+
 from db.database import Request, session
-import sys
 
 kafka_broker = os.environ.get("KAFKA_BROKER")
 topic_name = 'topic_test'
@@ -43,7 +44,7 @@ for event in consumer:
         resized_image.save(byte_stream, format='PNG')
         resized_img_str = base64.b64encode(byte_stream.getvalue())
         new_request = Request(
-            Identifier=data_json["hashed_id"],
+            Identifier=data_json["identifier"],
             BaseCode=resized_img_str,
             Width=data_json["width"],
             Height=data_json["height"]
