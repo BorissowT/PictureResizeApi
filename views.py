@@ -7,7 +7,7 @@ from app import app
 
 from service_functions import topic_name
 from db.database import Response, session
-from serialization.Schema import response_schema, serialize_request
+from serialization.schema import response_schema, serialize_request
 
 
 @app.route("/", methods=["GET"])

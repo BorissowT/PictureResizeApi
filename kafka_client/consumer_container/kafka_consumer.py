@@ -37,9 +37,9 @@ for event in consumer:
     base64_image = data_json["image"]
     width = data_json["width"]
     height = data_json["height"]
-    binary_image = base64.b64decode(base64_image)
-    pil_image = Image.open(BytesIO(binary_image))
     try:
+        binary_image = base64.b64decode(base64_image)
+        pil_image = Image.open(BytesIO(binary_image))
         resized_image = pil_image.resize((int(width), int(height)))
     except Exception as error:
         print(error)
@@ -55,6 +55,7 @@ for event in consumer:
         )
         session.add(new_request)
         session.commit()
+        print("successfully created")
 
 
 
