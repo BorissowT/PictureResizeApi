@@ -8,11 +8,10 @@ from sqlalchemy import create_engine
 
 import time
 
-db_user = os.environ.get("DB_MYSQL_REMOTE_USER")
+db_user = os.environ.get("DB_MYSQL_USER")
 db_pass = os.environ.get("DB_MYSQL_PASS")
 db_address = os.environ.get("DB_MYSQL_ADDRESS")
 db_name = "pictureapi_mydb"
-print(db_user, db_pass)
 flag = True
 while flag:
     try:

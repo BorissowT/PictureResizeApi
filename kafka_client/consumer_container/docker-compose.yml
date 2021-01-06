@@ -5,7 +5,7 @@ services:
     build: .
     environment:
       KAFKA_BROKER: broker:29092
-      DB_MYSQL_REMOTE_USER: ${DB_MYSQL_REMOTE_USER}
+      DB_MYSQL_USER: ${DB_MYSQL_REMOTE_USER}
       DB_MYSQL_PASS: ${DB_MYSQL_PASS}
       DB_MYSQL_ADDRESS: ${DB_MYSQL_ADD}
       KAFKA_TOPIC_NAME: ${KAFKA_TOPIC_NAME}
