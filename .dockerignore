@@ -1,4 +1,5 @@
 kafka_client/consumer_container
+kafka_client/docker-compose.yml
 README.md
 docker_commands.txt
 db_container
