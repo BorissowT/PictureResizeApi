@@ -2,7 +2,7 @@
 
 create an API for the picture resizing. The service has to be an asynchronous.
 That's mean all the requests has its own id number. User can get status of the operation by sending request to the address/api/{id}.
-The API (address/api) requires a post request with text json in body as follows {"image":{base64 encoded picture},"width":{w}, "height":{h}}.
+The API (address/api) requires a post request with text json in body as follows {"image":{base64 encoded picture},"width":{w}, "height":{h}}. Every part of application schould be containerized. 
 
 Technologies:\
 ajax for encoding picture.\
@@ -13,12 +13,30 @@ docker container for service.\
 marshmallow - to serialize data (is for hiding real db-column's names from clients)\
 web server - werkzeug
 
-to start the app you should:
-1) install docker engine:
-2) from workdir execute command: docker-compose up or docker-compose up -d (p.s. you can specify kafka topic for the producer on this step by modifying variable in .env file)
-3) sometimes broker starts too slow or doesn't start because of slow zookeeper. thence try to start broker container and then pictureapi_web_1 again
-4) proceed to localhost:5000 or execute "docker logs pictureapi_web_1" (you'll see: Running on http://0.0.0.0:5000/)
+DB
+1..create .env file in "/PictureResizeApi/db_container" as following: 
+DB_MYSQL_PASS=<pass>
+2.run docker-compose up -d from "/PictureResizeApi/db_container" 
+3.check if everything is working on localhost:8080 in adminer
 
-to start a consumer:\
-1)execute first command from kafka_client_commands in consumer's directory\
-2)execute second command. Note, that you can specify the topic's name and group's name for the consumer on this step, by setting environment variables. By default, it's set to "topic_test" and "my-group-id", respectively.
+Kafka
+1.run docker-compose up -d from "/PictureResizeApi/kafka_client" 
+2.check if everything is working on localhost:9021 in control-center
+
+Api
+1.create .env file in "/PictureResizeApi/" as following:
+DB_MYSQL_REMOTE_USER=root
+DB_MYSQL_PASS=<pass>
+DB_MYSQL_ADD=192.168.1.103:3307
+KAFKA_TOPIC_NAME=<topic name for producer>
+2.run docker-compose up from "/PictureResizeApi/". (if kafka and db are running and you've configured .env properly you should see Running on http://0.0.0.0:5000/)
+  
+Kafka_consumer
+1.create .env file in "PictureResizeApi/kafka_client/consumer_container/" as following:DB_MYSQL_REMOTE_USER=root
+DB_MYSQL_PASS=<pass>
+DB_MYSQL_ADD=192.168.1.103:3307
+KAFKA_TOPIC_NAME=<topic_name>
+KAFKA_GROUP_NAME=<group_id>
+2.run docker-compose up from "PictureResizeApi/kafka_client/consumer_container/".
+  
+Then you can send requests from localhost:5000 and check results at localhost:5000/api/
