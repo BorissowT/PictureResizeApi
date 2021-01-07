@@ -32,7 +32,8 @@ KAFKA_TOPIC_NAME=<topic name for producer>\
 2.run "docker-compose up" from "/PictureResizeApi/". (if kafka and db are running and you've configured .env properly you should see Running on http://0.0.0.0:5000/)
   
 Kafka_consumer\
-1.create .env file in "PictureResizeApi/kafka_client/consumer_container/" as following:DB_MYSQL_REMOTE_USER=root\
+1.create .env file in "PictureResizeApi/kafka_client/consumer_container/" as following:\
+DB_MYSQL_REMOTE_USER=root\
 DB_MYSQL_PASS=<pass>\
 DB_MYSQL_ADD=192.168.1.103:3307\
 KAFKA_TOPIC_NAME=<topic_name>\
