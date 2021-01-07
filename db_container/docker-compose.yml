@@ -1,0 +1,20 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql
+    command: --init-file /pictureapi_mydb_response.sql
+    volumes:
+      - ./pictureapi_mydb_response.sql:/pictureapi_mydb_response.sql
+    restart: always
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_MYSQL_PASS}
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
