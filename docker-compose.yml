@@ -6,13 +6,17 @@ services:
     build: .
     ports:
       - "5000:5000"
+    networks:
+      - db_container_default
+      - kafka_client_default
     environment:
       KAFKA_BROKER: broker:29092
       KAFKA_TOPIC_NAME: ${KAFKA_TOPIC_NAME}
       DB_MYSQL_USER: ${DB_MYSQL_REMOTE_USER}
-      DB_MYSQL_ADDRESS: ${DB_MYSQL_ADD}
+      DB_MYSQL_ADDRESS: db:3306
       DB_MYSQL_PASS: ${DB_MYSQL_PASS}
 networks:
-  default:
-    external:
-      name: kafka_client_default
+  db_container_default:
+    external: true
+  kafka_client_default:
+    external: true

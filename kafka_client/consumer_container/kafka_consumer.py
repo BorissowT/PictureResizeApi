@@ -33,6 +33,8 @@ consumer = KafkaConsumer(
     group_id=group_name,
     value_deserializer=lambda x: loads(x.decode('utf-8'))
 )
+
+
 for event in consumer:
     data_json = event.value
     try:
