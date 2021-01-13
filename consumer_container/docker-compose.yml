@@ -1,0 +1,25 @@
+version: '2'
+services:
+  web:
+    # Each service needs to declare what networks it attaches to
+    # The default is to only attach to "default"
+    # If anything is explicitly listed then "default" is not used
+    networks:
+      - db_container_default
+      - kafka_container_default
+    build: .
+    environment:
+      KAFKA_BROKER: broker:29092
+      DB_MYSQL_USER: ${DB_MYSQL_REMOTE_USER}
+      DB_MYSQL_PASS: ${DB_MYSQL_PASS}
+      DB_MYSQL_ADDRESS: db:3306
+      KAFKA_TOPIC_NAME: ${KAFKA_TOPIC_NAME}
+      KAFKA_GROUP_NAME: ${KAFKA_GROUP_NAME}
+
+
+# You also need to declare at the top level that the networks exist
+networks:
+  db_container_default:
+    external: true
+  kafka_container_default:
+    external: true
