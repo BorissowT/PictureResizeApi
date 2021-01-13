@@ -28,31 +28,3 @@ For the convenience this app has another url with a template for making requests
 Kafka-consumer - is a service, which is listening to the kafka topic, resizes pictures and saves
 in the DB-element.
 
-DB\
-1..create .env file in "/PictureResizeApi/db_container" as following: \
-DB_MYSQL_PASS=<pass>\
-2.run "docker-compose up -d" from "/PictureResizeApi/db_container" \
-3.check if everything is working on localhost:8080 in adminer
-
-Kafka\
-1.run "docker-compose up -d" from "/PictureResizeApi/kafka_client" \
-2.check if everything is working on localhost:9021 in control-center
-
-Api\
-1.create .env file in "/PictureResizeApi/" as following:\
-DB_MYSQL_REMOTE_USER=root\
-DB_MYSQL_PASS=<pass>\
-DB_MYSQL_ADD=192.168.1.103:3307\
-KAFKA_TOPIC_NAME=<topic name for producer>\
-2.run "docker-compose up" from "/PictureResizeApi/". (if kafka and db are running and you've configured .env properly you should see Running on http://0.0.0.0:5000/)
-  
-Kafka_consumer\
-1.create .env file in "PictureResizeApi/kafka_client/consumer_container/" as following:\
-DB_MYSQL_REMOTE_USER=root\
-DB_MYSQL_PASS=<pass>\
-DB_MYSQL_ADD=192.168.1.103:3307\
-KAFKA_TOPIC_NAME=<topic_name>\
-KAFKA_GROUP_NAME=<group_id>\
-2.run "docker-compose up" from "PictureResizeApi/kafka_client/consumer_container/".
-  
-Then you can send requests from localhost:5000 and check results at localhost:5000/api/
