@@ -62,18 +62,19 @@ Write-Output "YES";
 
 fill_env_credentials;
 
-#cd .\kafka_container;
-#docker-compose up -d;
-#cd ..;
-#cd .\db_container;
-#docker-compose up -d;
-#cd ..;
-#cd .\api_container;
-#docker-compose up -d;
-#cd ..;
-#cd .\consumer_container;
-#docker-compose up -d;
-#cd ..;
+cd .\kafka_container;
+docker-compose up -d;
+cd ..;
+cd .\db_container;
+docker-compose up -d;
+cd ..;
+cd .\api_container;
+docker-compose up -d;
+cd ..;
+cd .\consumer_container;
+docker-compose up -d;
+cd ..;
+
 }
 
 #start
