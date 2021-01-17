@@ -1,5 +1,4 @@
 # PictureResizeApi
-***
 ### Technical Design Assignment
 
 PcitureResizeApi creates an API for picture resizing that is asynchronous. It does this by using a RESTful API concepts and horizontal distribution and scaling systems. This ensure that every element of the app can run simultaneously on multiple different servers or on one single machine at any given time. The essentially allows for the system to produce its other main goal of creating a playback system of different models in Event-Driven Architecture.
