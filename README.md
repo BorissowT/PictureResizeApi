@@ -1,58 +1,30 @@
 # PictureResizeApi
 
-This is a distributed and horizontal scalable RESTFul API service.
-Every part of this app could run on a separate server or in a cluster of servers (alternatively
-all elements could run on a single machine).
-The main goal of this project is to construct a sample of the Event Driven Architecture.
+Technical Design Assignment
 
-Technical Design Assignment:\
-Create an API for picture-resizing operations one. The service has to be an asynchronous.
-That's mean all the requests has its own id number. User can get status of
-the operation by id or the result of the operation.
-The initial POST request to "address/api" requires a json dictionary in body with following attributes: {"image":{base64 encoded picture},"width":{w}, "height":{h}}.
-As soon, as the operation is done, the client can get the resized picture by sending a GET request to the API
-with id in the body. Eventually, every part of the application should run in separate docker containers. 
+PcitureResizeApi creates an API for picture resizing that is asynchronous. It does this by using a RESTful API concepts and horizontal distribution and scaling systems. This ensure that every element of the app can run simultaneously on multiple different servers or on one single machine at any given time. The essentially allows for the system to produce its other main goal of creating a playback system of different models in Event-Driven Architecture.
 
-Main elements:\
+In laymen’s terms and for purposes of the app though, this all means that when a user uses the the app all requests to the API will have their own ID number and user can get the status of an operation by using this ID number or by typing in the result of the operation into the API. When one wants to know what a particular operation did to a photo, this is useful. 
 
-DB - is a simple pre-existing MySQL database with only one table and only one user.
-You can configure the db with the adminer interface,
-by running MySQL scripts directly in a browser. 
+How to Make a Request
 
-Kafka - is a cluster of zookeeper, kafka and additionally control-center to maintain kafka's elements.
+A request for resizing a picture should be made into to the API containing the request “POST” and have in the body of the request the following json attributes: {“image”:{base64 encoded picture},”width”:{w}, ”height”:{h}}.
 
-API - is a simple flask app with two url for sending requests and getting result. 
-All resize requests are pushed to the kafka-topic.
-For the convenience this app has another url with a template for making requests to API.
+Once this above operation is completed, the user should retrieve his resized picture by sending a GET request to the API with the ID number in url (api/<id>).
 
-Kafka-consumer - is a service, which is listening to the kafka topic, resizes pictures and saves
-in the DB-element.
+Every part of the application should run through separate Docker containers.
 
-DB\
-1..create .env file in "/PictureResizeApi/db_container" as following: \
-DB_MYSQL_PASS=<pass>\
-2.run "docker-compose up -d" from "/PictureResizeApi/db_container" \
-3.check if everything is working on localhost:8080 in adminer
 
-Kafka\
-1.run "docker-compose up -d" from "/PictureResizeApi/kafka_client" \
-2.check if everything is working on localhost:9021 in control-center
+Main Elements
 
-Api\
-1.create .env file in "/PictureResizeApi/" as following:\
-DB_MYSQL_REMOTE_USER=root\
-DB_MYSQL_PASS=<pass>\
-DB_MYSQL_ADD=192.168.1.103:3307\
-KAFKA_TOPIC_NAME=<topic name for producer>\
-2.run "docker-compose up" from "/PictureResizeApi/". (if kafka and db are running and you've configured .env properly you should see Running on http://0.0.0.0:5000/)
-  
-Kafka_consumer\
-1.create .env file in "PictureResizeApi/kafka_client/consumer_container/" as following:\
-DB_MYSQL_REMOTE_USER=root\
-DB_MYSQL_PASS=<pass>\
-DB_MYSQL_ADD=192.168.1.103:3307\
-KAFKA_TOPIC_NAME=<topic_name>\
-KAFKA_GROUP_NAME=<group_id>\
-2.run "docker-compose up" from "PictureResizeApi/kafka_client/consumer_container/".
-  
-Then you can send requests from localhost:5000 and check results at localhost:5000/api/
+DB: A basic MySQL database that runs in real time with the setup of the application. It has just one user and one table. The database is configured via the interface adminer by running MySQL scripts directly in a browser.
+
+Kafka: Consists of zookeper, kafka brockers and control-center.
+
+API: API is the application programing interface. It's bult on Flask framework and uses two different URL’s for processing requests and feedback. Additional url returns a template with java-script, which helps to encode the picture and send json request to the api.
+
+Kafka-Consumer: This service processes the changes in Kafka topics. Once changes are made they are registered through this app, the pictures are resized, and then they are saved to the DB database.
+
+
+
+
