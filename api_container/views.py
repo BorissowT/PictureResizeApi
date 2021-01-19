@@ -26,11 +26,12 @@ def api():
 @app.route('/api/<status_id>/', methods=["GET"])
 def get_status(status_id):
     req = session.query(Response).filter(Response.Identifier == status_id).first()
+    session.close()
     if req:
         serialized_data = response_schema.dump(req)
         return jsonify(serialized_data), 200, {"location": "/api/{}".format(status_id)}
     else:
-        return {"status": "not found"}, 400, {"location": "/api/{}".format(status_id)}
+        return {"status": "not found"}, 202, {"location": "/api/{}".format(status_id)}
 
 
 @app.errorhandler(500)

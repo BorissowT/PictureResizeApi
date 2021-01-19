@@ -13,13 +13,40 @@ $("#submit").on("click",()=>{
     var height = $("#height").val();
     if (Number.isInteger(parseInt(width)) && Number.isInteger(parseInt(height)) && width > 0 && height > 0) {
       send_ajax_with_image(result[1], width, height);
-      console.log(result[1])
     }
     else{
       alert("width and height has to be postitive numbers");
       location.reload();
     }
   }, false);
+
+  function request_for_the_picture(request){
+
+      $.ajax({
+        type: 'GET',
+        url: `/api/${request.getResponseHeader('identifier')}`,
+        headers: {
+          "Content-Type": "application/json"
+        },
+      }).done(function (data) {
+        if (data['status']){
+          console.log("in process...")
+          setTimeout(function (){
+            console.log("sending again");
+            request_for_the_picture(request);
+                    },2000);
+
+        }
+        else {
+          console.log(data['image']);
+          var image = new Image();
+          image.src = `data:image/png;base64,${data['image']}`;
+          document.body.appendChild(image);
+          $(document.body).append(`<div><a download=\"FILENAME.PNG\" href=\"data:image/png;base64,${data['image']}\">Download</a></div>`)
+        }
+      });
+
+  }
 
   function send_ajax_with_image(image, width, height){
     
@@ -34,6 +61,7 @@ $("#submit").on("click",()=>{
     }).done(function(data, textStatus, request) {
       console.log("Operation's id is:", request.getResponseHeader('identifier'));
       alert(`Operation's id is: ${request.getResponseHeader('identifier')}`);
+      request_for_the_picture(request);
     }).fail(function(e) {
       console.log(e);
     });
