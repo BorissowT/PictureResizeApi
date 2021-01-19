@@ -47,10 +47,13 @@ for event in consumer:
     else:
         resized_img_str = base64.b64encode(byte_stream.getvalue())
         data_json["image"] = resized_img_str
-        result = response_schema.load(data_json, session=session)
-        session.add(result)
-        session.commit()
-        print("successfully created")
+        try:
+            result = response_schema.load(data_json, session=session)
+            session.add(result)
+            session.commit()
+            print("successfully created")
+        except Exception:
+            print("the picture is too big")
 
 
 

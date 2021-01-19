@@ -11,8 +11,13 @@ from serialization.schema import response_schema, serialize_request
 
 
 @app.route("/", methods=["GET"])
-def index():
+def index_page():
     return render_template("index.html")
+
+
+@app.route("/result", methods=["GET"])
+def result_page():
+    return render_template("result.html")
 
 
 @app.route("/api/", methods=["POST"])
