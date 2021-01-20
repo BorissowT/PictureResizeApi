@@ -4,7 +4,7 @@ from json import loads
 
 from kafka import KafkaConsumer
 
-from consumer_container.service_functions.serv_fun import resize_picture, serialize_data, add_to_db
+from service_functions.serv_fun import resize_picture, serialize_data, add_to_db
 
 kafka_broker = os.environ.get("KAFKA_BROKER")
 topic_name = 'topic_test'

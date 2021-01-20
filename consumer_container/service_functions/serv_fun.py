@@ -3,8 +3,8 @@ from io import BytesIO
 
 from PIL import Image
 
-from consumer_container.db_consumer.database import session
-from consumer_container.serialization_consumer.schema import response_schema
+from db_consumer.database import session
+from serialization_consumer.schema import response_schema
 
 
 def resize_picture(data_json):
