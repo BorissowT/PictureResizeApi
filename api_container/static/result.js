@@ -17,7 +17,7 @@ function request_for_the_picture(id){
           setTimeout(function (){
             console.log("sending again");
             request_for_the_picture(id  );
-                    },2000);
+                    },4000);
 
         }
         else {

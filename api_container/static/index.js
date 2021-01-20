@@ -12,11 +12,16 @@ $("#submit").on("click",()=>{
     var width = $('#width').val();
     var height = $("#height").val();
 
-    if (Number.isInteger(parseInt(width)) && Number.isInteger(parseInt(height)) && width > 0 && height > 0) {
+    if (Number.isInteger(parseInt(width)) && Number.isInteger(parseInt(height))
+        && width > 1
+        && height > 1
+        && width < 2000
+        && height < 2000
+    ) {
       send_ajax_with_image(result[1], width, height);
     }
     else{
-      alert("width and height has to be postitive numbers");
+      alert("width and height has to be more than 1px and less than 2000px");
       location.reload();
     }
   }, false);

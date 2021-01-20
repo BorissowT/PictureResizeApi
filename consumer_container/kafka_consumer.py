@@ -1,14 +1,10 @@
-import base64
 import os
 import sys
-from io import BytesIO
 from json import loads
 
-from PIL import Image
 from kafka import KafkaConsumer
 
-from db_consumer.database import session
-from serialization_consumer.schema import response_schema, ResponseSchema
+from consumer_container.service_functions.serv_fun import resize_picture, serialize_data, add_to_db
 
 kafka_broker = os.environ.get("KAFKA_BROKER")
 topic_name = 'topic_test'
@@ -35,25 +31,12 @@ consumer = KafkaConsumer(
 print("consumer is listening to the '{0}' topic in {1} group".format(topic_name, group_name))
 
 for event in consumer:
+    print("+++++++++process_begin+++++++++++")
     data_json = event.value
-    try:
-        binary_image = base64.b64decode(data_json["image"])
-        pil_image = Image.open(BytesIO(binary_image))
-        resized_image = pil_image.resize((int(data_json["width"]), int(data_json["height"])))
-        byte_stream = BytesIO()
-        resized_image.save(byte_stream, format='PNG')
-    except Exception as error:
-        print(error)
-    else:
-        resized_img_str = base64.b64encode(byte_stream.getvalue())
-        data_json["image"] = resized_img_str
-        try:
-            result = response_schema.load(data_json, session=session)
-            session.add(result)
-            session.commit()
-            print("successfully created")
-        except Exception:
-            print("the picture is too big")
+    resize_picture(data_json)
+    result = serialize_data(data_json)
+    add_to_db(result)
+        
 
 
 
