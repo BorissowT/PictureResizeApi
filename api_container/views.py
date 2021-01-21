@@ -22,6 +22,7 @@ def result_page():
 
 @app.route("/api/", methods=["POST"])
 def api():
+    # TODO: add Request serialization scheme
     serialized_data = serialize_request(request)
     print("sending meassage to {}".format(topic_name))
     producer.send(topic_name, value=serialized_data)
