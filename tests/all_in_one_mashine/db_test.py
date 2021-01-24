@@ -20,4 +20,7 @@ class DbTest(unittest.TestCase):
         )
 
     def test_connection(self):
-        self.assertRaises(mysql.connector.errors.ProgrammingError, self.set_connection())
+        try:
+            self.set_connection()
+        except Exception as e:
+            self.fail("Connection to DB can't be set up: {}".format(e))
