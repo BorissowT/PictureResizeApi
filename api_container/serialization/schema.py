@@ -21,5 +21,6 @@ def serialize_request(request):
     data_json["identifier"] = hashed_id
     return data_json
 
+
 response_schema = ResponseSchema()
 

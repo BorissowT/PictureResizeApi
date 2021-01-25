@@ -3,7 +3,7 @@ import sys
 
 from flask import Flask
 
-from service_functions import set_app_params
+from api_container.service_functions import set_app_params
 
 app = Flask(__name__)
 

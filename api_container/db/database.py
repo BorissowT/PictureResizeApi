@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 
-from app import app
+from api_container.app import app
 
 db_user = os.environ.get("DB_MYSQL_USER")
 db_pass = os.environ.get("DB_MYSQL_PASS")
@@ -15,10 +15,27 @@ connection = "mysql+pymysql://{0}:{1}@{2}/{3}".format(db_user, db_pass, db_addre
 app.config['SQLALCHEMY_DATABASE_URI'] = connection
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
+Response = None
+session = None
+db = None
 
-Base = automap_base()
-Base.prepare(db.engine, reflect=True)
 
-Response = Base.classes.response
-session = Session(db.engine)
+def connect_api_to_db():
+    try:
+        db = SQLAlchemy(app)
+
+        Base = automap_base()
+        Base.prepare(db.engine, reflect=True)
+
+        global Response
+        global session
+        Response = Base.classes.response
+        session = Session(db.engine)
+    except Exception as exception_msg:
+        print(exception_msg)
+        connect_api_to_db()
+    else:
+        print("api has been successfully connected to DB")
+
+
+connect_api_to_db()
