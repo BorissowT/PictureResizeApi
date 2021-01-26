@@ -7,7 +7,7 @@ from app import app
 
 from service_functions import topic_name
 from db.database import Response, session
-from serialization.schema import response_schema, serialize_request
+from serialization.schema import response_schema, request_schema
 
 
 @app.route("/", methods=["GET"])
@@ -22,8 +22,8 @@ def result_page():
 
 @app.route("/api/", methods=["POST"])
 def api():
-    # TODO: add Request serialization scheme
-    serialized_data = serialize_request(request)
+    request.json["identifier"] = request.remote_addr
+    serialized_data = request_schema.dump(request.json)
     print("sending meassage to {}".format(topic_name))
     producer.send(topic_name, value=serialized_data)
     return jsonify(), 201, {"location": "/api/", "identifier": serialized_data["identifier"]}
