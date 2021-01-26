@@ -1,4 +1,4 @@
-from marshmallow import fields, Schema
+from marshmallow import fields, Schema, validates, INCLUDE
 from marshmallow_sqlalchemy import SQLAlchemySchema
 from marshmallow.validate import Range
 
@@ -20,15 +20,20 @@ class ResponseSchema(SQLAlchemySchema):
 class RequestSchema(Schema):
     identifier = fields.Function(lambda obj: hash_id(obj["identifier"]))
     image = fields.String(required=True)
-    width = fields.Integer(required=True, validate=Range(min=1,
+    width = fields.Integer(required=True, validate=[Range(min=1,
                                                          min_inclusive=False,
                                                          max=2000,
-                                                         max_inclusive=False))
-    height = fields.Integer(required=True, validate=Range(min=1,
+                                                         max_inclusive=False, error="Value must be greater than 0")]
+                           )
+    height = fields.Integer(required=True, validate=[Range(min=1,
                                                           min_inclusive=False,
                                                           max=2000,
-                                                          max_inclusive=False))
+                                                          max_inclusive=False,
+                                                          error="Value must be greater than 0")]
+                            )
 
+    class Meta:
+        unknown = INCLUDE
 
 
 response_schema = ResponseSchema()

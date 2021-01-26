@@ -23,6 +23,9 @@ def result_page():
 @app.route("/api/", methods=["POST"])
 def post_new_picture():
     request.json["identifier"] = request.remote_addr
+    valid = request_schema.validate(request.json)
+    if request_schema.validate(request.json):
+        return jsonify(), 400, {"location": "/api/", "status": valid}
     serialized_data = request_schema.dump(request.json)
     print("sending meassage to {}".format(topic_name))
     producer.send(topic_name, value=serialized_data)
