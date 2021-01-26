@@ -1,3 +1,4 @@
+import datetime as dt
 import os
 import sys
 from json import loads
@@ -31,7 +32,7 @@ consumer = KafkaConsumer(
 print("consumer is listening to the '{0}' topic in {1} group".format(topic_name, group_name))
 
 for event in consumer:
-    print("+++++++++process_begin+++++++++++")
+    print("+++++++++process begins at {}+++++++++++".format(dt.datetime.now()))
     data_json = event.value
     resize_picture(data_json)
     result = serialize_data(data_json)
