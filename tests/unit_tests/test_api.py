@@ -29,36 +29,24 @@ class RequestSerializationTest(unittest.TestCase):
 
     @staticmethod
     def fill_negative_width():
-        identifier = "127.0.0.1"
-        with open('tests/unit_tests/test_data/base64_picture.txt', 'r') as file:
-            image = file.read().replace('\n', '')
         width, height = -20, 20
         data = {"identifier": identifier, "image": image, "width": width, "height": height}
         return data
 
     @staticmethod
     def fill_negative_height():
-        identifier = "127.0.0.1"
-        with open('tests/unit_tests/test_data/base64_picture.txt', 'r') as file:
-            image = file.read().replace('\n', '')
         width, height = 20, -20
         data = {"identifier": identifier, "image": image, "width": width, "height": height}
         return data
 
     @staticmethod
     def fill_big_width():
-        identifier = "127.0.0.1"
-        with open('tests/unit_tests/test_data/base64_picture.txt', 'r') as file:
-            image = file.read().replace('\n', '')
         width, height = 2001, 20
         data = {"identifier": identifier, "image": image, "width": width, "height": height}
         return data
 
     @staticmethod
     def fill_big_height():
-        identifier = "127.0.0.1"
-        with open('tests/unit_tests/test_data/base64_picture.txt', 'r') as file:
-            image = file.read().replace('\n', '')
         width, height = 20, 2001
         data = {"identifier": identifier, "image": image, "width": width, "height": height}
         return data
