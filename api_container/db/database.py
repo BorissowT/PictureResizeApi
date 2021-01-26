@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 
-from api_container.app import app
+from app import app
 
 db_user = os.environ.get("DB_MYSQL_USER")
 db_pass = os.environ.get("DB_MYSQL_PASS")

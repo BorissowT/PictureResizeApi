@@ -21,7 +21,7 @@ def result_page():
 
 
 @app.route("/api/", methods=["POST"])
-def api():
+def post_new_picture():
     request.json["identifier"] = request.remote_addr
     serialized_data = request_schema.dump(request.json)
     print("sending meassage to {}".format(topic_name))

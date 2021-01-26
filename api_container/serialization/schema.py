@@ -2,6 +2,7 @@ from marshmallow import fields, Schema
 from marshmallow_sqlalchemy import SQLAlchemySchema
 from marshmallow.validate import Range
 
+
 from db.database import Response
 from service_functions import hash_id
 
