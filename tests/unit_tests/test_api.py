@@ -27,28 +27,24 @@ class RequestSerializationTest(unittest.TestCase):
         data = {"identifier": self.identifier, "image": self.image, "width": width, "height": height}
         return data
 
-    @staticmethod
-    def fill_negative_width():
+    def fill_negative_width(self):
         width, height = -20, 20
-        data = {"identifier": identifier, "image": image, "width": width, "height": height}
+        data = {"identifier": self.identifier, "image": self.image, "width": width, "height": height}
         return data
 
-    @staticmethod
-    def fill_negative_height():
+    def fill_negative_height(self):
         width, height = 20, -20
-        data = {"identifier": identifier, "image": image, "width": width, "height": height}
+        data = {"identifier": self.identifier, "image": self.image, "width": width, "height": height}
         return data
 
-    @staticmethod
-    def fill_big_width():
+    def fill_big_width(self):
         width, height = 2001, 20
-        data = {"identifier": identifier, "image": image, "width": width, "height": height}
+        data = {"identifier": self.identifier, "image": self.image, "width": width, "height": height}
         return data
 
-    @staticmethod
-    def fill_big_height():
+    def fill_big_height(self):
         width, height = 20, 2001
-        data = {"identifier": identifier, "image": image, "width": width, "height": height}
+        data = {"identifier": self.identifier, "image": self.image, "width": width, "height": height}
         return data
 
     def test_valid_request(self):
