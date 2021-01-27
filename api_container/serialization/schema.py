@@ -1,10 +1,9 @@
-from marshmallow import fields, Schema, validates, INCLUDE
-from marshmallow_sqlalchemy import SQLAlchemySchema
+from marshmallow import fields, Schema, INCLUDE
 from marshmallow.validate import Range
+from marshmallow_sqlalchemy import SQLAlchemySchema
 
-
-from db.database import Response
 from service_functions import hash_id
+from db.database import Response
 
 
 class ResponseSchema(SQLAlchemySchema):
