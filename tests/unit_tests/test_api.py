@@ -28,12 +28,12 @@ class RequestSerializationTest(unittest.TestCase):
         return data
 
     def fill_negative_width(self):
-        width, height = -20, 20
+        width, height = -1, 20
         data = {"identifier": self.identifier, "image": self.image, "width": width, "height": height}
         return data
 
     def fill_negative_height(self):
-        width, height = 20, -20
+        width, height = 20, -1
         data = {"identifier": self.identifier, "image": self.image, "width": width, "height": height}
         return data
 
