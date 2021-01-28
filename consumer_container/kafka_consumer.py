@@ -6,6 +6,8 @@ from json import loads
 from kafka import KafkaConsumer
 
 from service_functions.serv_fun import resize_picture, serialize_data, add_to_db
+from serialization_consumer.schema import response_schema
+from db_consumer.database import session
 
 kafka_broker = os.environ.get("KAFKA_BROKER")
 topic_name = 'topic_test'
@@ -34,9 +36,13 @@ print("consumer is listening to the '{0}' topic in {1} group".format(topic_name,
 for event in consumer:
     print("+++++++++process begins at {}+++++++++++".format(dt.datetime.now()))
     data_json = event.value
-    resize_picture(data_json)
-    result = serialize_data(data_json)
-    add_to_db(result)
+    not_valid = response_schema.validate(data_json, session=session)
+    if not_valid:
+        print("validation error: {}".format(not_valid))
+    else:
+        resize_picture(data_json)
+        result = serialize_data(data_json)
+        add_to_db(result)
         
 
 

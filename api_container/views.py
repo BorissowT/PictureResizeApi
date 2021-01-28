@@ -1,6 +1,5 @@
 from flask import render_template, request, jsonify
 
-
 from kafka_client.kafka_producer import producer
 
 from app import app
@@ -23,9 +22,9 @@ def result_page():
 @app.route("/api/", methods=["POST"])
 def post_new_picture():
     request.json["identifier"] = request.remote_addr
-    valid = request_schema.validate(request.json)
-    if valid:
-        return jsonify(), 400, {"location": "/api/", "status": valid}
+    not_valid = request_schema.validate(request.json)
+    if not_valid:
+        return jsonify(), 400, {"location": "/api/", "status": not_valid}
     serialized_data = request_schema.dump(request.json)
     print("sending meassage to {}".format(topic_name))
     producer.send(topic_name, value=serialized_data)
