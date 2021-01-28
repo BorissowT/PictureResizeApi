@@ -19,7 +19,7 @@ class RequestSerializationTest(unittest.TestCase):
 
     @staticmethod
     def fill_image():
-        with open('tests/unit_tests/test_data/base64_picture.txt', 'r') as file:
+        with open('tests/unit_tests/test_data/base64_unresized_picture.txt', 'r') as file:
             image = file.read().replace('\n', '')
             return image
 
