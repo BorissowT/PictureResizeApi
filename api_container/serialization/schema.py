@@ -20,15 +20,16 @@ class RequestSchema(Schema):
     identifier = fields.Function(lambda obj: hash_id(obj["identifier"]))
     image = fields.String(required=True)
     width = fields.Integer(required=True, validate=[Range(min=1,
-                                                         min_inclusive=False,
-                                                         max=2000,
-                                                         max_inclusive=False, error="Value must be greater than 0")]
-                           )
-    height = fields.Integer(required=True, validate=[Range(min=1,
                                                           min_inclusive=False,
                                                           max=2000,
                                                           max_inclusive=False,
-                                                          error="Value must be greater than 0")]
+                                                          error="Value must be greater than 0 and less than 2000 px")]
+                           )
+    height = fields.Integer(required=True, validate=[Range(min=1,
+                                                           min_inclusive=False,
+                                                           max=2000,
+                                                           max_inclusive=False,
+                                                           error="Value must be greater than 0 and less than 2000 px")]
                             )
 
     class Meta:

@@ -12,7 +12,7 @@ class IndexTemplateTest(unittest.TestCase):
     def test_template(self):
         tester = app.test_client(self)
         response = tester.get(self.url)
-        self.assertEqual(response.status_code, self.code) and \
+        self.assertEqual(response.status_code, self.code)
         self.assertEqual(response.content_type, "text/html; charset=utf-8")
 
 
