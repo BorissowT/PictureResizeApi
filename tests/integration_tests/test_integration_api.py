@@ -34,40 +34,26 @@ class RequestTest(unittest.TestCase):
         image = 'iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAABrUlEQVR4nF2RvWtTURyGn985597bJlQjGiPoFknVRlChQwMdRAcduvRfELvopC661kVE1EU6ty4WHEUUEawF21JcQgTBjyGINUqlliTXm/PhEFPEd3qH9+EdHuFv0pmxaWPUrAthVIv8yLy/k5tr3Oa/mJ0mcklrOWZ7Aa2lpK1M319mXSual2t8WFxEf9lPxQD8mqnsg3Dc2rDDq6BeZoZrOajdW6K+oRlRDqMAIolPJrEuGi0kRhFcYKPUfi+eKlCIEiaTIU4gvDEAQ72tMsEs4Pw7RCoh5Gtr1RYRHLK9/qN3QOC5ASife9L8VBj7jlZHsLx9+PrW3c0DN87n8qgsBa0h7bIlMSvCi+0SXV8nP1LEWYgjaHevt3bnni0IUwjj4tnc5Xh6YZJHhnZvHBMV6Wz3v3suTKilVtEzf0VYxbNCQhnHHhGCQdRZkmGwGQTAqq+zwzczNFUMVQTQgOVx34Nwmiz9jHcdTFQhxI0zZvkwEZACCvD8xLA+EHcRnW/QJONg51Qsv0vAVQZKEqBLXSb41gemCmv/mF+1gHvFqHYcRbEXy0eEB4PBHx2WmIunbvRcAAAAAElFTkSuQmCC'
         return image
 
-    def fill_valid_data(self):
+    def fill_data_from_params(self, width, height):
         image = self.fill_image()
-        width, height = 50, 50
         data = {"image": image, "width": width, "height": height}
         json_data = json.dumps(data)
         self.json_data = json_data
+
+    def fill_valid_data(self):
+        self.fill_data_from_params(50, 50)
 
     def fill_negative_width(self):
-        image = self.fill_image()
-        width, height = -50, 50
-        data = {"image": image, "width": width, "height": height}
-        json_data = json.dumps(data)
-        self.json_data = json_data
+        self.fill_data_from_params(-50, 50)
 
     def fill_negative_height(self):
-        image = self.fill_image()
-        width, height = 50, -50
-        data = {"image": image, "width": width, "height": height}
-        json_data = json.dumps(data)
-        self.json_data = json_data
+        self.fill_data_from_params(50, -50)
 
     def fill_overtop_height(self):
-        image = self.fill_image()
-        width, height = 50, 2001
-        data = {"image": image, "width": width, "height": height}
-        json_data = json.dumps(data)
-        self.json_data = json_data
+        self.fill_data_from_params(50, 2001)
 
     def fill_overtop_width(self):
-        image = self.fill_image()
-        width, height = 2001, 50
-        data = {"image": image, "width": width, "height": height}
-        json_data = json.dumps(data)
-        self.json_data = json_data
+        self.fill_data_from_params(2001, 50)
 
     def post_request(self):
         self.session.head('http://127.0.0.1:5000/api/')
