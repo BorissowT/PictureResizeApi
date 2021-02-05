@@ -1,8 +1,6 @@
-from api_container.views import app
+import requests
+
 import unittest
-
-
-# add api_container. to imports in tested folder(schema, app, database, views)
 
 
 class IndexTemplateTest(unittest.TestCase):
@@ -10,14 +8,13 @@ class IndexTemplateTest(unittest.TestCase):
     code = 200
 
     def test_template(self):
-        tester = app.test_client(self)
-        response = tester.get(self.url)
+        response = requests.get('http://localhost:5000{}'.format(self.url))
         self.assertEqual(response.status_code, self.code)
-        self.assertEqual(response.content_type, "text/html; charset=utf-8")
+        self.assertEqual(response.headers["Content-Type"], "text/html; charset=utf-8")
 
 
 class ResultTemplateTest(IndexTemplateTest):
-    url = "result?id="
+    url = "/result?id="
     code = 200
 
 
