@@ -7,6 +7,20 @@ import json
 # this tests require api, broker and db parts to be running
 
 
+def invalid_request_assertion(type_of_error):
+    def outer_function(fill_invalid_data_function):
+        def wrapper_function(self):
+            fill_invalid_data_function(self)
+            self.post_request()
+            error_message = "{{'{error:}': ['Value must be greater than 0 and less than 2000 px']}}".format(
+                error=type_of_error)
+            self.assertEqual(self.response.headers["status"],
+                             error_message)
+            self.assertEqual(self.response.status_code, 400)
+        return wrapper_function
+    return outer_function
+
+
 class RequestTest(unittest.TestCase):
     image = None
     width = None
@@ -75,33 +89,21 @@ class RequestTest(unittest.TestCase):
         self.post_request()
         self.assertEqual(self.response.status_code, 400)
 
+    @invalid_request_assertion("width")
     def test_negative_width(self):
         self.fill_negative_width()
-        self.post_request()
-        self.assertEqual(self.response.headers["status"],
-                         "{'width': ['Value must be greater than 0 and less than 2000 px']}")
-        self.assertEqual(self.response.status_code, 400)
 
-    def test_negative_height(self):
-        self.fill_negative_height()
-        self.post_request()
-        self.assertEqual(self.response.headers["status"],
-                         "{'height': ['Value must be greater than 0 and less than 2000 px']}")
-        self.assertEqual(self.response.status_code, 400)
-
-    def test_overtop_height(self):
-        self.fill_overtop_height()
-        self.post_request()
-        self.assertEqual(self.response.headers["status"],
-                         "{'height': ['Value must be greater than 0 and less than 2000 px']}")
-        self.assertEqual(self.response.status_code, 400)
-
+    @invalid_request_assertion("width")
     def test_overtop_width(self):
         self.fill_overtop_width()
-        self.post_request()
-        self.assertEqual(self.response.headers["status"],
-                         "{'width': ['Value must be greater than 0 and less than 2000 px']}")
-        self.assertEqual(self.response.status_code, 400)
+
+    @invalid_request_assertion("height")
+    def test_negative_height(self):
+        self.fill_negative_height()
+
+    @invalid_request_assertion("height")
+    def test_overtop_height(self):
+        self.fill_overtop_height()
 
 
 if __name__ == "__main__":
