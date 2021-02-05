@@ -89,19 +89,19 @@ class RequestTest(unittest.TestCase):
         self.post_request()
         self.assertEqual(self.response.status_code, 400)
 
-    @invalid_request_assertion("width")
+    @invalid_request_assertion(type_of_error="width")
     def test_negative_width(self):
         self.fill_negative_width()
 
-    @invalid_request_assertion("width")
+    @invalid_request_assertion(type_of_error="width")
     def test_overtop_width(self):
         self.fill_overtop_width()
 
-    @invalid_request_assertion("height")
+    @invalid_request_assertion(type_of_error="height")
     def test_negative_height(self):
         self.fill_negative_height()
 
-    @invalid_request_assertion("height")
+    @invalid_request_assertion(type_of_error="height")
     def test_overtop_height(self):
         self.fill_overtop_height()
 
