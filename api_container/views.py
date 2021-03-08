@@ -1,6 +1,7 @@
 from flask import render_template, request, jsonify
 
 from kafka_client.kafka_producer import producer
+from kafka.errors import KafkaError
 
 from app import app
 
@@ -27,7 +28,12 @@ def post_new_picture():
         return jsonify(), 400, {"location": "/api/", "status": not_valid}
     serialized_data = request_schema.dump(request.json)
     print("sending meassage to {}".format(topic_name))
-    producer.send(topic_name, value=serialized_data)
+    future = producer.send(topic_name, value=serialized_data)
+    try:
+        record_metadata = future.get(timeout=10)
+    except KafkaError as e:
+        print("error", e)
+        pass
     return jsonify(), 201, {"location": "/api/", "identifier": serialized_data["identifier"]}
 
 
